@@ -17,6 +17,11 @@ const AuthContextProvider = (props) => {
     setTokenString(tokenId);
     // setIsLoggedIn(true);
     localStorage.setItem("token", tokenId);
+    // auto logout after 5mins
+    setTimeout(()=>{
+      console.log("going to logout");
+      removeTokenHandler();
+    },5000*60);
   };
 
   const removeTokenHandler = () => {
