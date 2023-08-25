@@ -8,7 +8,7 @@ const AuthContextProvider = (props) => {
     const addTokenHandler=(tokenId)=>{
         console.log(tokenId);
         setTokenString(tokenId);
-        setIsLoggedIn(true);
+        // setIsLoggedIn(true);
     }
 
     const removeTokenHandler=()=>{
@@ -17,13 +17,17 @@ const AuthContextProvider = (props) => {
         setIsLoggedIn(false);
     }
 
+    const loggerHandler=()=>{
+        setIsLoggedIn(true);
+    }
     const AuthTokenObj={
         token:tokenString,
         isLoggedIn:isLoggedIn,
         addToken:addTokenHandler,
         removeToken:removeTokenHandler,
+        isLogger:loggerHandler,
     }
-    
+
   return (
     <AuthContext.Provider value={AuthTokenObj}>
       {props.children}

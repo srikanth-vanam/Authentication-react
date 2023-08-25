@@ -1,4 +1,4 @@
-import { useState, useRef, useContext,  } from "react";
+import { useState, useRef, useContext, useEffect,  } from "react";
 import {useHistory }from "react-router-dom"
 import classes from "./AuthForm.module.css";
 import AuthContext from "../Store/AuthContext";
@@ -59,12 +59,22 @@ const AuthForm = () => {
       .then((data) => {
         // console.log(data);
         ctx.addToken(data.idToken);
+        ctx.isLogger();
+        localStorage.setItem("token",data.idToken);
         history.replace("/");
       })
       .catch((error) => {
         alert(error.message);
       });
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      ctx.isLogger();
+      history.replace('/');
+      // history.push()
+    }
+  },[])
 
   return (
     <section className={classes.auth}>
