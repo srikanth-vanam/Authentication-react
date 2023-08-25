@@ -20,7 +20,7 @@ const MainNavigation = () => {
             <Link to='/profile'>Profile</Link>
           </li>}
           { ctx.isLoggedIn && <li>
-            <button onClick={()=>ctx.removeToken(ctx.tokenItems[ctx.tokenItems.length-1])}>Logout</button>
+            <button onClick={()=>ctx.removeToken()}>Logout</button>
           </li>}
         </ul>
       </nav>

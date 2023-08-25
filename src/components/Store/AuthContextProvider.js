@@ -3,37 +3,27 @@ import AuthContext from "./AuthContext";
 
 const AuthContextProvider = (props) => {
     const [isLoggedIn,setIsLoggedIn]=useState(false);
-    const [tokenArray,setTokenArray]=useState([]);
+    const [tokenString,setTokenString]=useState(null);
 
-    const addTokenHandler=(token)=>{
-        setTokenArray((prevState)=>{
-            const array=[...prevState];
-            array.push(token);
-            return array;
-        })
-    }
-
-    const removeTokenHandler=(tokenId)=>{
-        console.log(tokenArray);
+    const addTokenHandler=(tokenId)=>{
         console.log(tokenId);
-        setTokenArray((prevState)=>{
-            const newTokenArray=prevState.filter((item)=> tokenId!== item);
-            return newTokenArray;
-        })
-        setIsLoggedIn(false);
-    }
-
-    const isLoginHandler=()=>{
+        setTokenString(tokenId);
         setIsLoggedIn(true);
     }
 
+    const removeTokenHandler=()=>{
+        console.log(tokenString);
+        setTokenString(null);
+        setIsLoggedIn(false);
+    }
+
     const AuthTokenObj={
-        tokenItems:tokenArray,
+        token:tokenString,
         isLoggedIn:isLoggedIn,
         addToken:addTokenHandler,
         removeToken:removeTokenHandler,
-        isLogger:isLoginHandler,
     }
+    
   return (
     <AuthContext.Provider value={AuthTokenObj}>
       {props.children}
