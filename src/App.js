@@ -20,16 +20,13 @@ function App() {
             <AuthPage />
           </Route>
         )}
-
-        {ctx.isLoggedIn && (
-          <Route path="/profile">
-            <UserProfile />
-            {/* {!ctx.isLoggedIn && <Redirect to="/auth" />} */}
-          </Route>
-        )}
-
+        <Route path="/profile">
+          {console.log("in App profile route ", ctx.isLoggedIn)}
+          {ctx.isLoggedIn && <UserProfile />}
+          {!ctx.isLoggedIn && <Redirect to="/auth" />}
+        </Route>
         <Route path="*">
-          <Redirect to="/auth" />
+          <Redirect to="/" />
         </Route>
       </Switch>
     </Layout>

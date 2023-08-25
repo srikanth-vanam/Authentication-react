@@ -1,5 +1,5 @@
-import { useState, useRef, useContext, useEffect,  } from "react";
-import {useHistory }from "react-router-dom"
+import { useState, useRef, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import classes from "./AuthForm.module.css";
 import AuthContext from "../Store/AuthContext";
 
@@ -8,8 +8,8 @@ const AuthForm = () => {
   const [isLoad, setIsLoad] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const ctx=useContext(AuthContext);
-  const history=useHistory();
+  const ctx = useContext(AuthContext);
+  const history = useHistory();
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -49,8 +49,8 @@ const AuthForm = () => {
         } else {
           return res.json().then((data) => {
             let errorMsg = "Authentication failed";
-            if(data && data.error && data.error.message){
-              errorMsg=data.error.message;
+            if (data && data.error && data.error.message) {
+              errorMsg = data.error.message;
             }
             throw new Error(errorMsg);
           });
@@ -59,22 +59,12 @@ const AuthForm = () => {
       .then((data) => {
         // console.log(data);
         ctx.addToken(data.idToken);
-        ctx.isLogger();
-        localStorage.setItem("token",data.idToken);
         history.replace("/");
       })
       .catch((error) => {
         alert(error.message);
       });
   };
-
-  useEffect(()=>{
-    if(localStorage.getItem("token")){
-      ctx.isLogger();
-      history.replace('/');
-      // history.push()
-    }
-  },[])
 
   return (
     <section className={classes.auth}>

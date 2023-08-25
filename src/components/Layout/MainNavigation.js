@@ -9,7 +9,6 @@ const MainNavigation = () => {
   const history=useHistory();
   const clickHandler=()=>{
     ctx.removeToken();
-    localStorage.removeItem("token");
     // on logout redirecting user to login page
     history.replace("/auth")
   }

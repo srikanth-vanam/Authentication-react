@@ -1,32 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AuthContext from "./AuthContext";
 
 const AuthContextProvider = (props) => {
-    const [isLoggedIn,setIsLoggedIn]=useState(false);
-    const [tokenString,setTokenString]=useState(null);
+  const initialToken = localStorage.getItem("token");
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [tokenString, setTokenString] = useState(initialToken);
+  //
+  const userLoggedIn = !!tokenString;
+  // the main reason for using this line is iam not able to redirect to profile page
+  // if manually entered the url after login. while using the useState of isLoggedIn bcos
+  // useEffect renders after the comp. renders so everytime the context re-renders isLoggedIN bcomes false,
+  //  then useEffect makes it to true, but it will redirect to '/' page after being logged in..
+  //
+  const addTokenHandler = (tokenId) => {
+    console.log(tokenId);
+    setTokenString(tokenId);
+    // setIsLoggedIn(true);
+    localStorage.setItem("token", tokenId);
+  };
 
-    const addTokenHandler=(tokenId)=>{
-        console.log(tokenId);
-        setTokenString(tokenId);
-        // setIsLoggedIn(true);
-    }
+  const removeTokenHandler = () => {
+    console.log(tokenString);
+    setTokenString(null);
+    // setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  };
 
-    const removeTokenHandler=()=>{
-        console.log(tokenString);
-        setTokenString(null);
-        setIsLoggedIn(false);
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     console.log("inside useEffect in A-C-provider");
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
 
-    const loggerHandler=()=>{
-        setIsLoggedIn(true);
-    }
-    const AuthTokenObj={
-        token:tokenString,
-        isLoggedIn:isLoggedIn,
-        addToken:addTokenHandler,
-        removeToken:removeTokenHandler,
-        isLogger:loggerHandler,
-    }
+  const AuthTokenObj = {
+    token: tokenString,
+    isLoggedIn: userLoggedIn,
+    addToken: addTokenHandler,
+    removeToken: removeTokenHandler,
+  };
 
   return (
     <AuthContext.Provider value={AuthTokenObj}>
